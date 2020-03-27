@@ -136,3 +136,12 @@ class DoublyLinkedList:
             current = current.next
 
         return max_value
+
+some = DoublyLinkedList()
+
+some.add_to_head(2)
+current = some.head
+some.add_to_tail(3)
+some.delete(current)
+
+print(some.length)

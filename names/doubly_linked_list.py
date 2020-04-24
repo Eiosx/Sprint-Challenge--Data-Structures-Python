@@ -52,7 +52,7 @@ class DoublyLinkedList:
     as the new head of the list. Don't forget to handle 
     the old head node's previous pointer accordingly."""
     def add_to_head(self, value):
-        new_node = ListNode(value, None, None)
+        new_node = ListNode(value)
         self.length += 1
         if not self.head and not self.tail:
             self.head = new_node
@@ -74,7 +74,7 @@ class DoublyLinkedList:
     as the new tail of the list. Don't forget to handle 
     the old tail node's next pointer accordingly."""
     def add_to_tail(self, value):
-        new_node = ListNode(value, None, None)
+        new_node = ListNode(value)
         self.length += 1
         if not self.head and not self.tail:
             self.head = new_node
@@ -113,35 +113,37 @@ class DoublyLinkedList:
     """Removes a node from the list and handles cases where
     the node was the head or the tail"""
     def delete(self, node):
+        # TODO: Catch errors if list is empty or node is not in list
+        # For now assumine node is in list
         self.length -= 1
+        # if head and tail
         if self.head is self.tail:
             self.head = None
             self.tail = None
-        elif self.head is node:
-            self.head = node.next
+        # if head
+        elif node is self.head:
+            self.head = self.head.next
             node.delete()
-        elif self.tail is node:
-            self.tail = node.prev
+
+        # if tail
+        elif node is self.tail:
+            self.tail = self.tail.prev
             node.delete()
         else:
+            # if regular node
             node.delete()
 
     """Returns the highest value currently in the list"""
     def get_max(self):
+        # Loop through all nodes, looking for biggest value
+        # TODO: Error checking
+        if not self.head:
+            return None
         max_value = self.head.value
         current = self.head
-        while current is not None:
+        while current:
             if current.value > max_value:
                 max_value = current.value
             current = current.next
 
         return max_value
-
-some = DoublyLinkedList()
-
-some.add_to_head(2)
-current = some.head
-some.add_to_tail(3)
-some.delete(current)
-
-print(some.length)

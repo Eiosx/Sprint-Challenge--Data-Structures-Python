@@ -1,3 +1,20 @@
+# class Node:
+#   def __init__(self, value=None, next_node=None):
+#     # the value at this linked list node
+#     self.value = value
+#     # reference to the next node in the list
+#     self.next_node = next_node
+
+#   def get_value(self):
+#     return self.value
+
+#   def get_next(self):
+#     return self.next_node
+
+#   def set_next(self, new_next):
+#     # set this node's next_node reference to the passed in node
+#     self.next_node = new_next
+
 class Node:
   def __init__(self, value=None, next_node=None):
     # the value at this linked list node
@@ -19,6 +36,7 @@ class LinkedList:
   def __init__(self):
     # reference to the head of the list
     self.head = None
+    self.nodeTracker = None
 
   def add_to_head(self, value):
     node = Node(value)
@@ -43,54 +61,29 @@ class LinkedList:
     return False
 
   def reverse_list(self):
-    # TO BE COMPLETED
-    reversing = True
-    reversedList = []
-    current = self.head
-    counter = 0
-    while reversing and self.head:
-      if not current.next_node:
-        reversing = False
 
-      reversedList.append(current)
-      nextNode = current.next_node
-      current = nextNode
-      counter += 1
-    
-    current = self.head
-    index = len(reversedList)-1
-    while index > 0: 
-      if index == len(reversedList)-1:
-        if len(reversedList) > 1:
-          self.head = reversedList[index]
-          nextNode = Node(reversedList[index-1])
-          nextNode.set_next(self.head)
-          # self.head = nextNode
-          current = nextNode
-          print(nextNode.value)
-          # current = self.head.next_node
-          print(self.head.next_node)
-          index -= 1
-        else:
-          break
-      else:
-        current.set_next(reversedList[index-1])
-        current = current.next_node
-        index -= 1
-    return self.head.next_node
+    currentHead = self.head
+    self.nodeTracker = currentHead
+
+    if self.head is None:
+      pass
+    elif currentHead.next_node is not None:
+      self.head = self.head.next_node
+      self.reverse_list()
+      self.nodeTracker.set_next(currentHead)
+      self.nodeTracker = currentHead
 
 
 
 
-some = LinkedList()
+something = LinkedList()
 
-some.add_to_head(1)
-some.add_to_head(2)
-some.reverse_list()
-# some.add_to_head(3)
-# some.add_to_head(4)
-# some.add_to_head(5)
+something.add_to_head(1)
+something.add_to_head(2)
+something.add_to_head(3)
+something.add_to_head(4)
+something.add_to_head(5)
 
 
-print(some.head.next_node)
-     
+# something.reverse_list()
+print(something.head.next_node.value)

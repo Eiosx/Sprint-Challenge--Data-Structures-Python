@@ -9,29 +9,41 @@ class RingBuffer:
 
     def append(self, item):
       if self.storage.length == self.capacity:
-        # self.storage.delete(self.current)
-        self.storage.add_to_head(item)
-        counter = self.storage.head
-        while counter != self.current:
-          if counter.next == self.current:
-            self.storage
-        self.current = self.storage.head.next
-      else:
-        if self.storage.length == 0:
-          self.storage.add_to_tail(item)
-          self.current = self.storage.tail
+
+        if self.current is None:
+          self.current = self.storage.head
+          self.storage.remove_from_head()
+          self.storage.add_to_head(item)
+          self.current = self.storage.head.next
+
         else:
-          self.storage.add_to_tail(item)
+          tempNode = self.storage.head
+          while self.current:
+            if tempNode == self.current:
+              self.current = self.current.next
+              tempNode.insert_before(item)
+              # Need to manually lengthen doubly linked list since insert_before is an individual node method 
+              self.storage.length += 1
+              self.storage.delete(tempNode)
+              break
+            elif tempNode is None:
+              self.current = self.storage.head
+              break
+            else:
+              tempNode = tempNode.next
+
+      else:
+        self.storage.add_to_tail(item)
 
     def get(self):
         # Note:  This is the only [] allowed
         list_buffer_contents = []
 
-        # TODO: Your code here
+         # TODO: Your code here
         counter = self.storage.head
 
         while counter:
-          if  counter.value != None:
+          # if  counter is not None:
             list_buffer_contents.append(counter.value)
             counter = counter.next
 
